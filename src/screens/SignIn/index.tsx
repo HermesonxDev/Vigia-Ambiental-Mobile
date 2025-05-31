@@ -5,8 +5,13 @@ import Input from "../../components/Input"
 import Button from "../../components/Button"
 import { useState } from "react"
 import { AuthForm } from "../../utils/interfaces"
+import { useNavigation } from "@react-navigation/native"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"
+import { AuthStackRoutes } from "../../utils/types"
 
 const SignIn: React.FC = () => {
+
+    const navigation = useNavigation<NativeStackNavigationProp<AuthStackRoutes>>();
 
     const [formState, setFormState] = useState<AuthForm>({
         email: '',
@@ -39,6 +44,15 @@ const SignIn: React.FC = () => {
                             onChangeText={(text) => handleChangeForm(text, 'password')}
                         />
                     </View>
+
+                    <Text style={styles.registerText}>
+                        Não tem acesso ainda?
+                        <Text
+                            style={styles.link}
+                            onPress={() => navigation.navigate('sign-up')}
+                        > Registrar</Text>
+                        .
+                    </Text>
                 </View>
 
                 <Button activeOpacity={0.9}>Entrar</Button>

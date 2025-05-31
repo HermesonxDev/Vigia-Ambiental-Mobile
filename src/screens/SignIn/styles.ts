@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     form: {
         backgroundColor: '#66BB6A',
         width: '80%',
-        height: '40%',
+        height: '42%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -27,6 +27,13 @@ export const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         gap: 5
+    },
+    registerText: {
+        alignSelf: 'flex-end',
+        color: 'white'
+    },
+    link: {
+        color: 'blue'
     },
     label: {
         color: 'white',
