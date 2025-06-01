@@ -38,6 +38,8 @@ const SignIn: React.FC = () => {
                     <View style={styles.field}>
                         <Text style={styles.label}>Email</Text>
                         <Input
+                            value={formState.email}
+                            placeholder="Digite seu Email"
                             onChangeText={(text) => handleChangeForm(text, 'email')}
                         />
                     </View>
@@ -45,7 +47,10 @@ const SignIn: React.FC = () => {
                     <View style={styles.field}>
                         <Text style={styles.label}>Senha</Text>
                         <Input
+                            value={formState.password}
+                            placeholder="Digite sua Senha"
                             onChangeText={(text) => handleChangeForm(text, 'password')}
+                            secureTextEntry
                         />
                     </View>
 

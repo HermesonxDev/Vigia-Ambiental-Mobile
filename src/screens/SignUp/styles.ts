@@ -3,13 +3,13 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#C8E6C9',
+        backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
         gap: 50
     },
     form: {
-        backgroundColor: '#66BB6A',
+        backgroundColor: '#ccc',
         width: '80%',
         height: '50%',
         display: 'flex',
@@ -30,13 +30,14 @@ export const styles = StyleSheet.create({
     },
     registerText: {
         alignSelf: 'flex-end',
-        color: 'white'
+        color: 'black',
+        fontWeight: 'bold'
     },
     link: {
         color: 'blue'
     },
     label: {
-        color: 'white',
+        color: 'black',
         fontWeight: 'bold',
         paddingLeft: 5
     }
