@@ -30,5 +30,14 @@ export const styles = StyleSheet.create({
         color: 'black',
         fontWeight: 'bold',
         paddingLeft: 5
+    },
+    imageButton: {
+        borderWidth: 0.5,
+        borderRadius: 5,
+        backgroundColor: '#ccc',
+        padding: 5
+    },
+    imageButtonText: {
+        fontWeight: 'bold'
     }
 })

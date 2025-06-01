@@ -7,10 +7,14 @@ import { useGlobal } from "../../hooks/Global"
 import Loading from "../../components/Loading"
 import { AuthForm } from "../../utils/interfaces"
 import { useEffect, useState } from "react"
+import { NavigationProp, useNavigation } from "@react-navigation/native"
+import { AppTabAndDrawerRoutes } from "../../utils/types"
 
 const Profile: React.FC = () => {
 
     const { loading, user, updateUser } = useGlobal()
+
+    const navigation = useNavigation<NavigationProp<AppTabAndDrawerRoutes>>()
 
     const [formState, setFormState] = useState<AuthForm>({
         name: '',
@@ -73,7 +77,7 @@ const Profile: React.FC = () => {
                 {!loading
                     ? <Button
                         activeOpacity={0.9}
-                        onPress={() => updateUser(user?.id, formState)}
+                        onPress={() => updateUser(user?.id, formState, navigation.navigate)}
                       >Salvar</Button>
                     : <Loading />
                 }

@@ -8,8 +8,15 @@ interface IGlobalContext {
     logged: boolean,
     loading: boolean,
     user: User | null,
-    updateUser(id: number | undefined, formState: AuthForm): void,
-    addReport(formState: ReportForm): void,
+    updateUser(
+        id: number | undefined,
+        formState: AuthForm,
+        navigation: (screen: string) => void
+    ): void,
+    addReport(
+        formState: ReportForm,
+        navigation: (screen: string) => void
+    ): void,
     signUp(formState: AuthForm): void,
     signIn(formState: AuthForm): void,
     signOut(): void
@@ -25,7 +32,11 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
     const [reports, setReports] = useState<Report[]>(mocked_reports || [])
     const [user, setUser] = useState<User | null>(null)
 
-    const updateUser = async (id: number | undefined, formState: AuthForm) => {
+    const updateUser = async (
+        id: number | undefined,
+        formState: AuthForm,
+        navigation: (screen: string) => void
+    ) => {
         try {
             setLoading(true)
 
@@ -57,13 +68,17 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
             }
 
             setLoading(false)
+            navigation('home-drawer')
         } catch (error) {
             setLoading(false)
             console.error('Error on update user: ', String(error))
         }
     }
 
-    const addReport = (formState: ReportForm) => {
+    const addReport = async (
+        formState: ReportForm,
+        navigation: (screen: string) => void
+    ) => {
         try {
             setLoading(true)
 
@@ -79,7 +94,12 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
                 description: formState.description
             }
 
+            const updatedReports = [...currentReports, newReport]
+            setReports(updatedReports)
+            await AsyncStorage.setItem('reports', JSON.stringify(updatedReports))
+
             setLoading(false)
+            navigation('home-tab')
         } catch (error) {
             setLoading(true)
             console.error('Error on adding report: ', String(error))
@@ -169,6 +189,14 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
                     setUsers(mocked_users || [])
                 }
 
+                const storedReportsString = await AsyncStorage.getItem('reports')
+                if (storedReportsString) {
+                    const storedReports = JSON.parse(storedReportsString)
+                    setReports(Array.isArray(storedReports) ? storedReports : mocked_reports || [])
+                } else {
+                    setReports(mocked_reports || [])
+                }
+
                 const loggedValue = await AsyncStorage.getItem('logged')
                 const isLogged = !!loggedValue
 
@@ -182,6 +210,7 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
             } catch (error) {
                 console.error('Error loading stored data: ', String(error))
                 setUsers(mocked_users || [])
+                setReports(mocked_reports || [])
             }
         }
 
