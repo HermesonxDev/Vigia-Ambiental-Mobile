@@ -8,6 +8,7 @@ interface IGlobalContext {
     logged: boolean,
     loading: boolean,
     user: User | null,
+    reports: Report[],
     updateUser(
         id: number | undefined,
         formState: AuthForm,
@@ -222,6 +223,7 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
             logged,
             loading,
             user,
+            reports,
             updateUser,
             addReport,
             signUp,
