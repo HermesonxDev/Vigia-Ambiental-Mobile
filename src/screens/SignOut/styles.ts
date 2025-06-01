@@ -7,8 +7,24 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    title: {
-        fontSize: 22,
-        fontWeight: 'bold'
-    }
+    buttons: {
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 20
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 22
+    },
+    confirm: {
+        backgroundColor: '#66BB6A',
+        padding: 10,
+        borderRadius: 5
+    },
+    cancel: {
+        backgroundColor: 'red',
+        padding: 10,
+        borderRadius: 5
+    },
 })

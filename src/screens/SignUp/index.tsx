@@ -9,6 +9,7 @@ import { useNavigation } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { AuthStackRoutes } from "../../utils/types"
 import { useGlobal } from "../../hooks/Global"
+import Loading from "../../components/Loading"
 
 const SignUp: React.FC = () => {
 
@@ -66,10 +67,13 @@ const SignUp: React.FC = () => {
                     </Text>
                 </View>
 
-                <Button
-                    activeOpacity={0.9}
-                    onPress={() => signUp(formState)}
-                >Entrar</Button>
+                {!loading
+                    ? <Button
+                        activeOpacity={0.9}
+                        onPress={() => signUp(formState)}
+                      >Entrar</Button>
+                    : <Loading />
+                }
             </View>
         </View>
     )

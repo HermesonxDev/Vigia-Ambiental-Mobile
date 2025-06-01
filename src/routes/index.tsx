@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native"
 import AppRoutes from "./app.routes"
-import AuthRoutes from "./auth.routes"
+import AuthStackRoutes from "./auth.routes"
 import { useGlobal } from "../hooks/Global"
 
 const Routes: React.FC = () => {
@@ -9,7 +9,7 @@ const Routes: React.FC = () => {
 
     return (
         <NavigationContainer>
-            {logged ? <AppRoutes /> : <AuthRoutes />}
+            {logged ? <AppRoutes /> : <AuthStackRoutes />}
         </NavigationContainer>
     )
 }

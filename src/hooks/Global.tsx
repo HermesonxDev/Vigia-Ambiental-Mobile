@@ -6,7 +6,9 @@ import mocked_users from "../mock/users";
 interface IGlobalContext {
     logged: boolean,
     loading: boolean,
-    signUp(formState: AuthForm): void
+    signUp(formState: AuthForm): void,
+    signIn(formState: AuthForm): void,
+    signOut(): void
 }
 
 const GlobalContext = createContext<IGlobalContext>({} as IGlobalContext)
@@ -41,6 +43,38 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
         }
     }
 
+    const signIn = async (formState: AuthForm) => {
+        try {
+            setLoading(true)
+
+            const user = users.filter(user => user.email === formState.email && user.password === formState.password)
+
+            if (user) {
+                setLogged(true)
+                await AsyncStorage.setItem('logged', 'true')
+            }
+
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+            console.error('Error on sign in: ', String(error))
+        }
+    }
+
+    const signOut = async () => {
+        try {
+            setLoading(true)
+
+            setLogged(false)
+            await AsyncStorage.removeItem('logged')
+
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+            console.error('Error on sign out: ', String(error))
+        }
+    }
+
     useEffect(() => {
         const checkLogged = async () => {
             try {
@@ -58,7 +92,9 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
         <GlobalContext.Provider value={{
             logged,
             loading,
-            signUp
+            signUp,
+            signIn,
+            signOut
         }}>
             { children }
         </GlobalContext.Provider>

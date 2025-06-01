@@ -8,8 +8,12 @@ import { AuthForm } from "../../utils/interfaces"
 import { useNavigation } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { AuthStackRoutes } from "../../utils/types"
+import { useGlobal } from "../../hooks/Global"
+import Loading from "../../components/Loading"
 
 const SignIn: React.FC = () => {
+
+    const { loading, signIn } = useGlobal()
 
     const navigation = useNavigation<NativeStackNavigationProp<AuthStackRoutes>>();
 
@@ -55,7 +59,13 @@ const SignIn: React.FC = () => {
                     </Text>
                 </View>
 
-                <Button activeOpacity={0.9}>Entrar</Button>
+                {!loading
+                    ? <Button
+                        activeOpacity={0.9}
+                        onPress={() => signIn(formState)}
+                      >Entrar</Button>
+                    : <Loading />
+                }
             </View>
         </View>
     )
