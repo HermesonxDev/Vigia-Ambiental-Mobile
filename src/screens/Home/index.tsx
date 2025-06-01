@@ -4,7 +4,7 @@ import { styles } from "./styles"
 const Home: React.FC = () => {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Home</Text>
+            <Text style={styles.title}>Seja Bem-vindo!</Text>
         </View>
     )
 }

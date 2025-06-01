@@ -1,13 +1,15 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createContext, useContext, useEffect, useState } from "react";
-import { AuthForm, User } from "../utils/interfaces";
-import mocked_users from "../mock/users";
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { createContext, useContext, useEffect, useState } from "react"
+import { AuthForm, Report, ReportForm, User } from "../utils/interfaces"
+import mocked_users from "../mock/users"
+import mocked_reports from "../mock/reports"
 
 interface IGlobalContext {
     logged: boolean,
     loading: boolean,
     user: User | null,
     updateUser(id: number | undefined, formState: AuthForm): void,
+    addReport(formState: ReportForm): void,
     signUp(formState: AuthForm): void,
     signIn(formState: AuthForm): void,
     signOut(): void
@@ -20,6 +22,7 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
     const [logged, setLogged] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
     const [users, setUsers] = useState<User[]>(mocked_users || [])
+    const [reports, setReports] = useState<Report[]>(mocked_reports || [])
     const [user, setUser] = useState<User | null>(null)
 
     const updateUser = async (id: number | undefined, formState: AuthForm) => {
@@ -60,6 +63,29 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
         }
     }
 
+    const addReport = (formState: ReportForm) => {
+        try {
+            setLoading(true)
+
+            const currentReports = reports || []
+
+            const newReport = {
+                id: currentReports.length + 1,
+                reportingUserId: formState.reportingUserId,
+                street: formState.street,
+                number: formState.number,
+                neighborhood: formState.neighborhood,
+                referencePoint: formState.referencePoint,
+                description: formState.description
+            }
+
+            setLoading(false)
+        } catch (error) {
+            setLoading(true)
+            console.error('Error on adding report: ', String(error))
+        }
+    }
+
     const signUp = async (formState: AuthForm) => {
         try {
             setLoading(true)
@@ -96,10 +122,7 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
 
             const currentUsers = users || []
 
-            const foundUser = currentUsers.find(user => 
-                user.email === formState.email && 
-                user.password === formState.password
-            )
+            const foundUser = currentUsers.find(user => user.email === formState.email && user.password === formState.password)
             
             if (foundUser) {
                 setLogged(true)
@@ -171,6 +194,7 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
             loading,
             user,
             updateUser,
+            addReport,
             signUp,
             signIn,
             signOut
